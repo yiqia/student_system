@@ -1,0 +1,160 @@
+{include file="public/header"}
+
+<style>
+    ::-webkit-scrollbar { width: 0 !important }
+    .mo{
+        cursor:pointer;
+    }
+</style>
+<body>
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">数据表格</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">学生行程监测信息</h4>
+                    <p class="text-muted font-14 mb-4">
+                        该数据表为学生行程监测信息表，包含学生的每日打卡数据<br>
+                        <a class="mo" target="_blank" href="/student/stroke">点击这里进行打卡</a>
+                        <code class="mo"  data-toggle="modal" data-target="#signup-modal" onclick="addClick()"></code>
+                    </p>
+
+                    <table id="basic-datatable" class="table dt-responsive nowrap" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>照片</th>
+                            <th>名字</th>
+                            <th>学号</th>
+                            <th>出发时间</th>
+                            <th>离开时间</th>
+                            <th>出发地点</th>
+                            <th>到达地点</th>
+                            <th>交通方式</th>
+                            <th>车次号</th>
+                            <th>温度</th>
+                            <th>填写时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody id="studentData">
+                        <?php foreach($strokes as $key=>$value):
+                        $Id=$value['Id'];
+                        ?>
+                        <tr>
+                            <td data-name="Id" data-val="{$value['Id']}">{$value['Id']}</td>
+                            <td data-name="header" data-val="{$value['header']}" class="table-user"><img src="{$value['header']}" class="mr-2 rounded-circle" alt=""></td>
+                            <td data-name="name" data-val="{$value['name']}">{$value['name']}</td>
+                            <td data-name="number" data-val="{$value['number']}">{$value['number']}</td>
+                            <td data-name="id-card" data-val="{$value['start_time']}">{$value['start_time']}</td>
+                            <td data-name="sex" data-val="{$value['end_time']}">{$value['end_time']}</td>
+                            <td data-name="teacher" data-val="{$value['start_address']}">{$value['start_address']}</td>
+                            <td data-name="class" data-val="{$value['end_address']}">{$value['end_address']}</td>
+                            <td data-name="dormitory" data-val="{$value['traffic']}">{$value['traffic']}</td>
+                            <td data-name="major" data-val="{$value['train_number']}">{$value['train_number']}</td>
+                            <td data-name="college" data-val="{$value['temperature']}">{$value['temperature']}</td>
+                            <td data-name="college" data-val="{$value['creat_time']}">{$value['creat_time']}</td>
+                            <td class="table-action">
+                                <a href="javascript: void(0);" class="action-icon" data-toggle="modal" data-target="#primary-header-modal" onclick="deleteClick(this,{$Id})"> <i class="mdi mdi-delete"></i></a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+    </div>
+    <!-- end row-->
+    <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h4 class="modal-title" id="primary-header-modalLabel">提示</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>删除后无法恢复，你确定要删除该信息吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="sendDelete()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- end row-->
+
+
+</div> <!-- container -->
+<!-- third party js -->
+<script src="/assets/js/app.min.js"></script>
+<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+<script src="/assets/js/vendor/dataTables.responsive.min.js"></script>
+<script src="/assets/js/vendor/responsive.bootstrap4.min.js"></script>
+<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+<script src="/assets/js/vendor/buttons.bootstrap4.min.js"></script>
+<script src="/assets/js/vendor/buttons.html5.min.js"></script>
+<script src="/assets/js/vendor/buttons.flash.min.js"></script>
+<script src="/assets/js/vendor/buttons.print.min.js"></script>
+<script src="/assets/js/vendor/dataTables.keyTable.min.js"></script>
+<script src="/assets/js/vendor/dataTables.select.min.js"></script>
+<!-- third party js ends -->
+
+<!-- demo app -->
+<script src="/assets/js/pages/demo.datatable-init.js"></script>
+<!--<script src="/static/main.js"></script>-->
+<script>
+    let inputKey = ["Id", "name", "header", "number", "id_card", "sex", "teacher", "class", "dormitory", "major", "college"];
+    let deleteId=null;  //要删除的信息ID
+    // 删除信息点击
+    function deleteClick(e,Id){
+        deleteId=Id;
+    }
+    function sendDelete() {
+        if(deleteId===null){
+            $.NotificationApp.send("未知错误,请刷新重试",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            return;
+        }
+        console.log(deleteId)
+        $.ajax({
+            url:  "/student/deleteStroke",
+            data: {
+                Id:deleteId
+            },
+            type: "GET",
+            success: function(data) {
+                if(data.code==200){
+                    $.NotificationApp.send("删除成功",data.msg, "top-center", "rgba(0,0,0,0.2)", "success");
+                    setTimeout(()=>{
+                        window.location.href="/student/strokes"
+                    },1000)
+                }else{
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            },error:function (e) {
+                const data = e.responseJSON;
+                $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

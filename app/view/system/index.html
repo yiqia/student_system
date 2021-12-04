@@ -1,0 +1,89 @@
+{include file="public/header"}
+<style>
+    ::-webkit-scrollbar { width: 0 !important }
+</style>
+<body>
+<div>
+    <div class="content" style="margin-top: 50px">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!--<h4 class="header-title">网站设置</h4>-->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>网站标题</label>
+                                    <input type="text" class="form-control" value="{$system['title']}"
+                                           id="f-title"
+                                           data-provide="typeahead" placeholder="输入网站的标题">
+                                </div>
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-6 mt-3 mt-lg-0">
+                                <div class="form-group mb-3">
+                                    <label>导航条标题</label>
+                                    <input class="form-control" value="{$system['nav_title']}" type="text"
+                                           id="f-nav_title"
+                                           placeholder="请填写你的导航条标题">
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>底部版权</label>
+                                    <input type="text" class="form-control" value="{$system['footer']}" id="f-footer" data-provide="datepicker">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- end row -->
+                    </div> <!-- end card-->
+                    <div style="margin: 20px">
+                        <button class="btn btn-block btn-primary" type="button" onclick="infoPost()" id="infoPost">提交
+                        </button>
+                    </div>
+                </div> <!-- end col -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- App js -->
+<script src="/assets/js/app.min.js"></script>
+
+<script src="/assets/js/vendor/handlebars.min.js"></script>
+<script src="/assets/js/vendor/typeahead.bundle.min.js"></script>
+<script>
+    let info = ['title','nav_title','footer'];
+    function infoPost() {
+        let data = {};
+        info.forEach(item=>{
+            data[item]=$('#f-'+item).val();
+        })
+        $.ajax({
+            url:  "/system/update",
+            data,
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+                if(data.code==200){
+                    $.NotificationApp.send("修改成功",data.msg, "top-center", "rgba(0,0,0,0.2)", "success");
+                    setTimeout(()=>{
+                        window.location.href="/system/index"
+                    },1000)
+                }else{
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            },error:function (e) {
+                const data = e.responseJSON;
+                $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            }
+        });
+    }
+</script>
+</body>
+</html>

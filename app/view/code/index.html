@@ -1,0 +1,288 @@
+{include file="public/header"}
+
+<style>
+    ::-webkit-scrollbar { width: 0 !important }
+    .mo{
+        cursor:pointer;
+    }
+</style>
+<body>
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title">数据表格</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">二维码管理</h4>
+                    <p class="text-muted font-14 mb-4">
+                        该数据表为二维码管理，可以自行添加二维码地址和参数达到学生日常路径监测<br>
+                        添加一个新的功能二维码，<code class="mo"  data-toggle="modal" data-target="#signup-modal" onclick="addClick()">点击这里进行添加</code>
+                    </p>
+
+                    <table id="basic-datatable" class="table dt-responsive nowrap" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>二维码图片</th>
+                            <th>标题</th>
+                            <th>地址</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody id="studentData">
+                        <?php foreach($codes as $key=>$value):
+                        $Id=$value['Id'];
+                        ?>
+                        <tr>
+                            <td data-name="Id" data-val="{$value['Id']}">{$value['Id']}</td>
+                            <td data-name="header" class="table-user"><a href="https://wenhairu.com/static/api/qr/?size=200&text={$value['url']}" target="_blank"><img src="https://wenhairu.com/static/api/qr/?size=200&text={$value['url']}" class="mr-4" alt=""></a></td>
+                            <td data-name="name" data-val="{$value['title']}">{$value['title']}</td>
+                            <td data-name="number" data-val="{$value['url']}">{$value['url']}</td>
+                            <td data-name="id-card" data-val="{$value['creat_time']}">{$value['creat_time']}</td>
+                            <td class="table-action">
+                                <a href="javascript: void(0);"  onclick="copyCode('http://school.com/code/addStroke?title={$value[\'title\']}')" class="action-icon"> <i class="mdi mdi-content-copy"></i></a>
+                                <a href="javascript: void(0);"  data-toggle="modal" data-target="#signup-modal" onclick="editClick(this,{$Id})" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                                <a href="javascript: void(0);" class="action-icon" data-toggle="modal" data-target="#primary-header-modal" onclick="deleteClick(this,{$Id})"> <i class="mdi mdi-delete"></i></a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+    </div>
+    <!-- end row-->
+    <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                            <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
+                        </a>
+                    </div>
+
+                    <!--<form class="pl-3 pr-3" action="#">-->
+                    <div class="form-group" style="display: none;">
+                        <label for="f-Id">Id</label>
+                        <input class="form-control" type="text" id="f-Id" name="Id" required="" value="" >
+                    </div>
+                    <div class="form-group">
+                        <label for="f-title">标题</label>
+                        <input class="form-control" type="text" id="f-title" name="name" required="" placeholder="请输入标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="f-url">地址</label>
+                        <input class="form-control" type="text" id="f-url" name="header" required="" placeholder="请输入地址">
+                    </div>
+
+
+
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary" type="button" onclick="infoPost()" id="infoPost">保存</button>
+                    </div>
+
+                    <!--</form>-->
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h4 class="modal-title" id="primary-header-modalLabel">提示</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>删除后无法恢复，你确定要删除该信息吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="sendDelete()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- end row-->
+
+
+</div> <!-- container -->
+<!-- third party js -->
+<script src="/assets/js/app.min.js"></script>
+<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+<script src="/assets/js/vendor/dataTables.responsive.min.js"></script>
+<script src="/assets/js/vendor/responsive.bootstrap4.min.js"></script>
+<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+<script src="/assets/js/vendor/buttons.bootstrap4.min.js"></script>
+<script src="/assets/js/vendor/buttons.html5.min.js"></script>
+<script src="/assets/js/vendor/buttons.flash.min.js"></script>
+<script src="/assets/js/vendor/buttons.print.min.js"></script>
+<script src="/assets/js/vendor/dataTables.keyTable.min.js"></script>
+<script src="/assets/js/vendor/dataTables.select.min.js"></script>
+<!-- third party js ends -->
+
+<!-- demo app -->
+<script src="/assets/js/pages/demo.datatable-init.js"></script>
+<!--<script src="/static/main.js"></script>-->
+<script>
+    let inputId={};// 存储点击列表某一条的数据
+    let inputKey = ["Id", "title", "url"];
+    let fromClickType = 0;  // 1 就是新增 0 就是修改
+    let deleteId=null;  //要删除的信息ID
+    function copyCode(content,message) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", content);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+        if (message == null) {
+            $.NotificationApp.send("复制成功",'', "top-center", "rgba(0,0,0,0.2)", "success");
+        } else{
+            alert(message);
+        }
+    }
+    // function copyCode(e) {
+    //     console.log(e)
+    // }
+
+    // 点击添加信息
+    function addClick() {
+        fromClickType=1;
+        $('#infoPost').text('添加');
+        for(let item in inputId){
+            $("#f-"+item).val("");
+        }
+    }
+    // 删除信息点击
+    function deleteClick(e,Id){
+        deleteId=Id;
+    }
+    function sendDelete() {
+        if(deleteId===null){
+            $.NotificationApp.send("未知错误,请刷新重试",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            return;
+        }
+        console.log(deleteId)
+        $.ajax({
+            url:  "/code/delete",
+            data: {
+                Id:deleteId
+            },
+            type: "GET",
+            success: function(data) {
+                if(data.code==200){
+                    $.NotificationApp.send("删除成功",data.msg, "top-center", "rgba(0,0,0,0.2)", "success");
+                    setTimeout(()=>{
+                        window.location.href="/code/index"
+                    },1000)
+                }else{
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            },error:function (e) {
+                const data = e.responseJSON;
+                $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            }
+        });
+    }
+    // 信息提交
+    function infoPost() {
+        if(fromClickType===1){
+            let data = {};
+            for(let item of inputKey){
+                data[item]=$("#f-"+item).val();
+            }
+            $.ajax({
+                url:  "/code/add",
+                data,
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                    if(data.code==200){
+                        $.NotificationApp.send("添加成功",data.msg, "top-center", "rgba(0,0,0,0.2)", "success");
+                        setTimeout(()=>{
+                            window.location.href="/code/index"
+                        },1000)
+                    }else{
+                        $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                    }
+                },error:function (e) {
+                    const data = e.responseJSON;
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            });
+        }else{
+            let data = {};
+            for(let item of inputKey){
+                data[item]=$("#f-"+item).val();
+            }
+            $.ajax({
+                url:  "/code/update",
+                data,
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                    if(data.code==200){
+                        $.NotificationApp.send("修改成功",data.msg, "top-center", "rgba(0,0,0,0.2)", "success");
+                        setTimeout(()=>{
+                            window.location.href="/code/index"
+                        },1000)
+                    }else{
+                        $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                    }
+                },error:function (e) {
+                    const data = e.responseJSON;
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            });
+        }
+    }
+    function editClick(e,Id){
+        fromClickType=0;
+        $('#infoPost').text('保存');
+        $.ajax({
+            url:  "/code/getCodeOne",
+            data: {
+                Id
+            },
+            type: "GET",
+            success: function(data) {
+                if(data.code==200){
+                    inputId=data.data[0];
+                    for(let item in data.data[0]){
+                        $("#f-"+item).val(data.data[0][item])
+                    }
+                }else{
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            },error:function (e) {
+                const data = e.responseJSON;
+                $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

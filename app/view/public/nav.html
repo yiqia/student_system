@@ -1,0 +1,86 @@
+<div class="left-side-menu">
+
+    <div class="slimscroll-menu" id="left-side-menu-container">
+
+        <!-- LOGO -->
+        <a href="index.html" class="logo text-center">
+            <h4 style="color:#fff;margin: 30px 0;">{:getSystemSetInfo('nav_title')}</h4>
+        </a>
+
+        <!--- Sidemenu -->
+        <ul class="metismenu side-nav">
+
+            <li class="side-nav-title side-nav-item">导航栏</li>
+
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link" onclick="iframeSrc('/home/index')">
+                    <i class="dripicons-meter"></i>
+                    <span class="badge badge-success float-right">3</span>
+                    <span> 控制面板 </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link">
+                    <i class="dripicons-user-group"></i>
+                    <span> 学生管理 </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="side-nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="javascript: void(0);" onclick="iframeSrc('/student/student')">学生信息管理</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" onclick="iframeSrc('/student/strokes')">学生行程监测</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" onclick="iframeSrc('/code/stroke')">学生校内监测</a>
+                    </li>
+                </ul>
+            </li>
+            <!--<li class="side-nav-item">-->
+                <!--<a href="javascript: void(0);" class="side-nav-link">-->
+                    <!--<i class="dripicons-graph-pie"></i>-->
+                    <!--<span> 数据可视化 </span>-->
+
+                <!--</a>-->
+            <!--</li>-->
+
+            <?php
+                if($userInfo['power']==999){
+             ?>
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link" onclick="iframeSrc('/user/user')">
+                    <i class="dripicons-user-group"></i>
+                    <span> 账号管理 </span>
+
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="javascript: void(0);" class="side-nav-link" onclick="iframeSrc('/code/index')">
+                    <i class="dripicons-view-apps"></i>
+                    <span> 二维码管理 </span>
+
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a  href="javascript: void(0);" onclick="iframeSrc('/system/index')" class="side-nav-link">
+                    <i class="dripicons-gear"></i>
+                    <span> 系统管理 </span>
+
+                </a>
+            </li>
+            <?php } ?>
+        </ul>
+
+        <!-- Help Box -->
+
+        <!-- end Help Box -->
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>

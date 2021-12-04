@@ -1,0 +1,260 @@
+{include file="public/header"}
+<style>
+    ::-webkit-scrollbar { width: 0 !important }
+</style>
+<body>
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-light" id="dash-daterange">
+                                    <div class="input-group-append">
+                                                            <span class="input-group-text bg-primary border-primary text-white">
+                                                                <i class="mdi mdi-calendar-range font-13"></i>
+                                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="javascript: void(0);" class="btn btn-primary ml-2">
+                                <i class="mdi mdi-autorenew"></i>
+                            </a>
+                            <a href="javascript: void(0);" class="btn btn-primary ml-1">
+                                <i class="mdi mdi-filter-variant"></i>
+                            </a>
+                        </form>
+                    </div>
+                    <h4 class="page-title">控制台</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-xl-5">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <i class="mdi mdi-account-multiple widget-icon"></i>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" title="Number of Customers">返校人数</h5>
+                                <h3 class="mt-3 mb-3">26,254</h3>
+                                <p class="mb-0 text-muted">
+                                    <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
+                                    <span class="text-nowrap">最近30天</span>
+                                </p>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+
+                    <div class="col-lg-6">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <i class="mdi mdi-account-multiple widget-icon"></i>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" title="Number of Orders">离校人数</h5>
+                                <h3 class="mt-3 mb-3">143</h3>
+                                <p class="mb-0 text-muted">
+                                    <span class="text-danger mr-2"><i class="mdi mdi-arrow-down-bold"></i> 1.08%</span>
+                                    <span class="text-nowrap">最近30天</span>
+                                </p>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+                </div> <!-- end row -->
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <i class="mdi mdi-account-multiple widget-icon"></i>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" title="Average Revenue">请假人数</h5>
+                                <h3 class="mt-3 mb-3">45</h3>
+                                <p class="mb-0 text-muted">
+                                    <span class="text-danger mr-2"><i class="mdi mdi-arrow-down-bold"></i> 7.00%</span>
+                                    <span class="text-nowrap">最近30天</span>
+                                </p>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+
+                    <div class="col-lg-6">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <i class="mdi mdi-account-multiple widget-icon"></i>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" title="Growth">未到校人数</h5>
+                                <h3 class="mt-3 mb-3">15</h3>
+                                <p class="mb-0 text-muted">
+                                    <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 4.87%</span>
+                                    <span class="text-nowrap">最近30天</span>
+                                </p>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+                </div> <!-- end row -->
+
+            </div> <!-- end col -->
+
+            <div class="col-xl-7">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                            </div>
+                        </div>
+                        <h4 class="header-title mb-3">在校统计</h4>
+
+                        <div style="height: 263px;" class="chartjs-chart">
+                            <canvas id="high-performing-product"></canvas>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                            </div>
+                        </div>
+                        <h4 class="header-title">风险地区同学</h4>
+                        <div class="mb-4 mt-4">
+                            <div id="world-map-markers" style="height: 224px"></div>
+                        </div>
+
+                        <h5 class="mb-1 mt-0 font-weight-normal">北京</h5>
+                        <div class="progress-w-percent">
+                            <span class="progress-value font-weight-bold">15</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar" role="progressbar" style="width: 72%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                        <h5 class="mb-1 mt-0 font-weight-normal">石家庄</h5>
+                        <div class="progress-w-percent">
+                            <span class="progress-value font-weight-bold">29</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar" role="progressbar" style="width: 39%;" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                        <h5 class="mb-1 mt-0 font-weight-normal">成都</h5>
+                        <div class="progress-w-percent">
+                            <span class="progress-value font-weight-bold">25 </span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar" role="progressbar" style="width: 39%;" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                        <h5 class="mb-1 mt-0 font-weight-normal">新加坡</h5>
+                        <div class="progress-w-percent mb-0">
+                            <span class="progress-value font-weight-bold">12</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar" role="progressbar" style="width: 61%;" aria-valuenow="61" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+            <div class="col-xl-7">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                            </div>
+                        </div>
+                        <h4 class="header-title">学生信息统计</h4>
+
+                        <div class="mb-5 mt-4 chartjs-chart" style="height: 201px; max-width: 180px;">
+                            <canvas id="average-sales"></canvas>
+                        </div>
+
+                        <div class="chart-widget-list">
+                            <p>
+                                <i class="mdi mdi-square text-primary"></i> 在校学生
+                                <span class="float-right">26521</span>
+                            </p>
+                            <p>
+                                <i class="mdi mdi-square text-danger"></i>离校学生
+                                <span class="float-right">205</span>
+                            </p>
+                            <p>
+                                <i class="mdi mdi-square text-success"></i> 请假人数
+                                <span class="float-right">45</span>
+                            </p>
+                            <p class="mb-0">
+                                <i class="mdi mdi-square"></i> 未到校人数
+                                <span class="float-right">46</span>
+                            </p>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+
+        </div>
+        <!-- end row -->
+
+
+        <!-- end row -->
+
+    </div>
+</body>
+<script src="/assets/js/app.min.js"></script>
+<!-- third party js -->
+<script src="https://cdn.bootcss.com/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script src="/assets/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="/assets/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
+<!-- demo app -->
+<script src="/assets/js/pages/demo.dashboard.js"></script>
+</html>

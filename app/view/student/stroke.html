@@ -1,0 +1,145 @@
+{include file="public/header"}
+<body>
+<div>
+    <div class="content" style="margin-top: 50px">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">疫情行程统计表</h4>
+                        <p class="text-muted font-14 mb-3">
+                            请认真填写每天的真实数据，否者后果自负。
+                            <a class="mo" target="_blank" href="https://wenhairu.com/static/api/qr/?size=200&text=https://www.baidu.com">查看我的打卡记录二维码</a>
+                            <a class="mo" target="_blank" href="/student/strokeOne?Id={$userInfo['Id']}">点我直接查看</a>
+                        </p>
+                        <input type="text" style="display: none;" id="f-student_id" value="{$userInfo['Id']}">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>名字</label>
+                                    <input type="text" class="form-control" value="{$userInfo['name']}" disabled
+                                           data-provide="typeahead" placeholder="输入你的名字">
+                                </div>
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-6 mt-3 mt-lg-0">
+                                <div class="form-group mb-3">
+                                    <label>学号</label>
+                                    <input class="form-control" value="{$userInfo['number']}" disabled type="text"
+                                           placeholder="请填写你的学号">
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>出发时间</label>
+                                    <input type="text" class="form-control" id="f-start_time" data-provide="datepicker">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mt-3 mt-lg-0">
+                                <div class="form-group mb-3">
+                                    <label>到达时间</label>
+                                    <input type="text" class="form-control" id="f-end_time" data-provide="datepicker">
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>出发地点</label>
+                                    <input class="form-control" type="text" id="f-start_address" placeholder="输入你的出发地点">
+                                </div>
+                            </div> <!-- end col -->
+
+                            <div class="col-lg-6 mt-3 mt-lg-0">
+                                <div class="form-group mb-3">
+                                    <label>到达地点</label>
+                                    <input type="text" class="form-control" data-provide="typeahead" id="f-end_address"
+                                           placeholder="输入你的到达地点">
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-0">
+                                    <label>交通方式</label>
+                                    <input type="text" class="form-control" data-provide="typeahead" id="f-traffic"
+                                           placeholder="输入你的交通方式">
+
+                                </div>
+                            </div> <!-- end col -->
+                            <div class="col-lg-6 mt-3 mt-lg-0">
+                                <div class="form-group mb-3">
+                                    <label>车次号</label>
+                                    <input type="text" class="form-control" data-provide="typeahead" id="f-train_number"
+                                           placeholder="输入你的车次号">
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-0">
+                                    <label>今日温度</label>
+                                    <input type="text" class="form-control" data-provide="typeahead" id="f-temperature"
+                                           placeholder="输入你的今日温度">
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                    <div style="margin: 20px">
+                        <button class="btn btn-block btn-primary" type="button" onclick="infoPost()" id="infoPost">提交
+                        </button>
+                    </div>
+                </div> <!-- end col -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="public/footer" /}
+<!-- App js -->
+<script src="/assets/js/app.min.js"></script>
+
+<script src="/assets/js/vendor/handlebars.min.js"></script>
+<script src="/assets/js/vendor/typeahead.bundle.min.js"></script>
+<script>
+    let info = ['start_time','end_time','start_address','end_address','traffic','train_number','temperature','student_id'];
+    function infoPost() {
+        let data = {};
+        info.forEach(item=>{
+            data[item]=$('#f-'+item).val();
+        })
+        $.ajax({
+            url:  "/student/addStroke",
+            data,
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+                if(data.code==200){
+                    $.NotificationApp.send("提交成功",data.msg, "top-center", "rgba(0,0,0,0.2)", "success");
+                    setTimeout(()=>{
+                        window.location.href="/student/stroke"
+                    },1000)
+                }else{
+                    $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+                }
+            },error:function (e) {
+                const data = e.responseJSON;
+                $.NotificationApp.send("错误",data.msg, "top-center", "rgba(0,0,0,0.2)", "error")
+            }
+        });
+    }
+</script>
+</body>
+</html>
